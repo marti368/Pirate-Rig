@@ -9,6 +9,7 @@ public class Jacket : MonoBehaviour {
 	public Sprite rightShoulder;
 	public Sprite leftForearm;
 	public Sprite rightForearm;
+	public bool hasSleeves;
 
 	// Use this for initialization
 	void Start () {
@@ -23,18 +24,23 @@ public class Jacket : MonoBehaviour {
 		rig.jacket.sprite = torso;
 		rig.jacketFront.sprite = torsoFront;
 		rig.jacketBack.sprite = torsoBack;
-		rig.leftShoulder.sprite = leftShoulder;
-		rig.rightShoulder.sprite = rightShoulder;
-		rig.leftForearm.sprite = leftForearm;
-		rig.rightForearm.sprite = rightForearm;
 
 		rig.jacket.material = jacketColor;
 		rig.jacketFront.material = jacketColor;
 		rig.jacketBack.material = jacketColor;
 
-		rig.leftShoulder.material = jacketColor;
-		rig.rightShoulder.material = jacketColor;
-		rig.leftForearm.material = jacketColor;
-		rig.rightForearm.material = jacketColor;
+		if (hasSleeves == true) {
+			rig.leftShoulder.sprite = leftShoulder;
+			rig.rightShoulder.sprite = rightShoulder;
+			rig.leftForearm.sprite = leftForearm;
+			rig.rightForearm.sprite = rightForearm;
+
+			rig.leftShoulder.material = jacketColor;
+			rig.rightShoulder.material = jacketColor;
+			rig.leftForearm.material = jacketColor;
+			rig.rightForearm.material = jacketColor;
+		}
+	
+
 	}
 }

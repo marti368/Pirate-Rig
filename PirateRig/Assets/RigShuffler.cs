@@ -5,7 +5,6 @@ public class RigShuffler : MonoBehaviour {
 
 	public SpriteRenderer eyes;
 	public SpriteRenderer ear;
-	public SpriteRenderer effect;
 
 	public SpriteRenderer hairTop;
 	public SpriteRenderer hairFront;
@@ -19,8 +18,15 @@ public class RigShuffler : MonoBehaviour {
 
 	public SpriteRenderer mask;
 
+	public SpriteRenderer headEffect;
+	public SpriteRenderer torsoEffect;
+
 	public SpriteRenderer head;
 	public SpriteRenderer torso;
+	public SpriteRenderer leftShoulderSkin;
+	public SpriteRenderer rightShoulderSkin;
+	public SpriteRenderer leftForearmSkin;
+	public SpriteRenderer rightForearmSkin;
 	public SpriteRenderer hat;
 	public SpriteRenderer leftShoulder;
 	public SpriteRenderer rightShoulder;
@@ -48,6 +54,8 @@ public class RigShuffler : MonoBehaviour {
 	public bool hasStache;
 	public bool hasHair;
 	public bool hasMask;
+	public bool hasHeadEffect;
+	public bool hasTorsoEffect;
 
 	// Use this for initialization
 	void Start () {
@@ -77,12 +85,13 @@ public class RigShuffler : MonoBehaviour {
 		Material shirtColor = clothesColorAlbum [Random.Range (0, clothesColorAlbum.Length)];
 		Material jacketColor = clothesColorAlbum [Random.Range (0, clothesColorAlbum.Length)];
 		Material pantsColor = clothesColorAlbum [Random.Range (0, clothesColorAlbum.Length)];
+		Material effectsColor = clothesColorAlbum [Random.Range (0, clothesColorAlbum.Length)];
 		Material hatColor = jacketColor;
 		Material highlightColor = shirtColor;
 
 		pantsObject.GetComponent<Pants> ().Equip (this, pantsColor);
 
-        if (Random.Range(0, 20) != 0) //Shirt Check
+        if (Random.Range(0, 7) != 0) //Shirt Check
         {           
             hasShirt = true;
             GameObject[] shirtAlbum = Resources.LoadAll<GameObject>("Shirt");
@@ -106,7 +115,6 @@ public class RigShuffler : MonoBehaviour {
 			hatObject.GetComponent<Hat> ().Equip (this, hatColor, highlightColor);
 
 		} else {
-			hasHat = false;
 			hasHat = false;
 			hatFront.sprite = null;
 			hatBack.sprite = null;
@@ -140,6 +148,26 @@ public class RigShuffler : MonoBehaviour {
 			hasStache = false;
 			mustache.sprite = null;
 		}
+		if (Random.Range (0, 3) == 0) { 		//Head Effect Check
+			hasHeadEffect = true;
+			Sprite[] headEffectAlbum = Resources.LoadAll<Sprite> ("HeadEffects");
+			headEffect.sprite = headEffectAlbum [Random.Range (0, headEffectAlbum.Length)];
+			headEffect.material = effectsColor;
+		} else {
+			hasHeadEffect = false;
+			headEffect.sprite = null;
+		}
+
+		if (Random.Range (0, 3) == 0) { 		//Torso Effect Check
+			hasTorsoEffect = true;
+			Sprite[] torsoEffectAlbum = Resources.LoadAll<Sprite> ("TorsoEffects");
+			torsoEffect.sprite = torsoEffectAlbum [Random.Range (0, torsoEffectAlbum.Length)];
+			torsoEffect.material = effectsColor;
+		} else {
+			hasTorsoEffect = false;
+			torsoEffect.sprite = null;
+		}
+
 		/*if (Random.Range (0, 3) != 0) {			//Neck Check
 			Sprite[] neckAlbum = Resources.LoadAll<Sprite> ("Neck");
 			neck.sprite = neckAlbum [Random.Range (0, neckAlbum.Length)];
@@ -176,8 +204,11 @@ public class RigShuffler : MonoBehaviour {
 		rightHand.material = skinColor;
 		leftHand.material = skinColor;
 		torso.material = skinColor;
+		leftShoulderSkin.material = skinColor;
+		rightShoulderSkin.material = skinColor;
+		leftForearmSkin.material = skinColor;
+		rightForearmSkin.material = skinColor;
 		ear.material = skinColor;
-		effect.material = shirtColor;
 		neck.material = jacketColor;
 		eyes.sprite = eye;
 

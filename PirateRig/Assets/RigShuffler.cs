@@ -35,7 +35,7 @@ public class RigShuffler : MonoBehaviour {
 	public SpriteRenderer leftHand;
 	public SpriteRenderer rightHand;
 	public SpriteRenderer shirt;
-	public SpriteRenderer neck;
+	//public SpriteRenderer neck;
 	public SpriteRenderer hips;
 	public SpriteRenderer leftThigh;
 	public SpriteRenderer rightThigh;
@@ -209,7 +209,7 @@ public class RigShuffler : MonoBehaviour {
 		leftForearmSkin.material = skinColor;
 		rightForearmSkin.material = skinColor;
 		ear.material = skinColor;
-		neck.material = jacketColor;
+		//neck.material = jacketColor;
 		eyes.sprite = eye;
 
 

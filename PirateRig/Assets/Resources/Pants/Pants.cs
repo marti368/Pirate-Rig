@@ -20,7 +20,7 @@ public class Pants : MonoBehaviour {
 	void Update () {
 	
 	}
-	public void Equip(RigManager rig, Material pantsColor, Material bootsColor){
+	public void Equip(RigShuffler rig, Material pantsColor){
 		rig.hips.sprite = hips;
 		//rig.hipsBack.sprite = hipsBack;
 		rig.leftThigh.sprite = leftThigh;
@@ -33,9 +33,9 @@ public class Pants : MonoBehaviour {
 		rig.hips.material = pantsColor;
 		rig.leftThigh.material = pantsColor;
 		rig.rightThigh.material = pantsColor;
-		rig.leftShin.material = bootsColor;
-		rig.rightShin.material = bootsColor;
-		rig.leftFoot.material = bootsColor;
-		rig.rightFoot.material = bootsColor;
+		rig.leftShin.material = pantsColor;
+		rig.rightShin.material = pantsColor;
+		rig.leftFoot.material = pantsColor;
+		rig.rightFoot.material = pantsColor;
 	}
 }

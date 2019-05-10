@@ -2,10 +2,10 @@
 using System.Collections;
 
 public class Hair : MonoBehaviour {
-	public Sprite hair;
+	public Sprite top;
+	public Sprite front;
 	public Sprite back;
 	public Sprite hatHair;
-	public bool isBig;
 
 	// Use this for initialization
 	void Start () {
@@ -16,18 +16,17 @@ public class Hair : MonoBehaviour {
 	void Update () {
 	
 	}
-	public void Equip(RigShuffler shuffler, RigManager rig, Material hairColor, bool hasHat){
-
-		if (shuffler.hasHat == true) {
-			rig.hair.sprite = hatHair;
-		} 
-		else {
-			rig.hair.sprite = hair;
+	public void Equip(RigShuffler rig, Material hairColor, bool hasHat){
+		if (hasHat == true) {
+			rig.hairTop.sprite = hatHair;
+		} else {
+			rig.hairTop.sprite = top;
 		}
-		
+		rig.hairFront.sprite = front;
 		rig.hairBack.sprite = back;
 
-		rig.hair.material = hairColor;
+		rig.hairTop.material = hairColor;
+		rig.hairFront.material = hairColor;
 		rig.hairBack.material = hairColor;
 	}
 }

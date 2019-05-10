@@ -1,14 +1,53 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
-public class RigShuffler: MonoBehaviour {
+public class RigShuffler : MonoBehaviour {
 
-	public RigManager maleRig;
-	public RigManager femaleRig;
-	public RigManager rig;
+	public SpriteRenderer eyes;
+	public SpriteRenderer ear;
 
-	public bool hasShirt;
+	public SpriteRenderer hairTop;
+	public SpriteRenderer hairFront;
+	public SpriteRenderer hairBack;
+
+	public SpriteRenderer beard;
+	public SpriteRenderer mustache;
+
+	public SpriteRenderer hatFront;
+	public SpriteRenderer hatBack;
+
+	public SpriteRenderer mask;
+
+	public SpriteRenderer headEffect;
+	public SpriteRenderer torsoEffect;
+
+	public SpriteRenderer head;
+	public SpriteRenderer torso;
+	public SpriteRenderer leftShoulderSkin;
+	public SpriteRenderer rightShoulderSkin;
+	public SpriteRenderer leftForearmSkin;
+	public SpriteRenderer rightForearmSkin;
+	public SpriteRenderer hat;
+	public SpriteRenderer leftShoulder;
+	public SpriteRenderer rightShoulder;
+	public SpriteRenderer leftForearm;
+	public SpriteRenderer rightForearm;
+	public SpriteRenderer leftHand;
+	public SpriteRenderer rightHand;
+	public SpriteRenderer shirt;
+	//public SpriteRenderer neck;
+	public SpriteRenderer hips;
+	public SpriteRenderer leftThigh;
+	public SpriteRenderer rightThigh;
+	public SpriteRenderer leftShin;
+	public SpriteRenderer rightShin;
+	public SpriteRenderer leftFoot;
+	public SpriteRenderer rightFoot;
+	public SpriteRenderer jacket;
+	public SpriteRenderer jacketFront;
+	public SpriteRenderer jacketBack;
+
+    public bool hasShirt;
 	public bool hasHat;
 	public bool hasJacket;
 	public bool hasBeard;
@@ -17,217 +56,164 @@ public class RigShuffler: MonoBehaviour {
 	public bool hasMask;
 	public bool hasHeadEffect;
 	public bool hasTorsoEffect;
-	public bool isMale;
-	public bool hasTattoo;
+
 	// Use this for initialization
 	void Start () {
-		Shuffle ();
-		
+		Shuffle();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
 	}
 	public void Shuffle(){
-		string eyesAlbumName = "Eyes";
-		string jacketAlbumName = "Jacket";
-		string shirtAlbumName = "Shirt";
-		string hairAlbumName = "Hair";
-		string sashAlbumName = "Sash";
-		string torsoEffectAlbumName = "Torso Effects";
-		string maskAlbumName = "MaleMask";
 
-		hasShirt = true;
+		Sprite[] eyesAlbum = Resources.LoadAll<Sprite> ("Eyes");
+		Sprite eye = eyesAlbum [Random.Range (0, eyesAlbum.Length)];
+		//Sprite[] effectsAlbum = Resources.LoadAll<Sprite> ("Effects");
+		//effect.sprite = effectsAlbum [Random.Range (0, effectsAlbum.Length)];
 
-		//Determining gender
-		if (Random.Range (0, 2) != 0) {
-			isMale = true;
-			maleRig.transform.parent.gameObject.SetActive(true);
-			femaleRig.transform.parent.gameObject.SetActive(false);
-			rig = maleRig;
-			if (Random.Range (0, 3) != 0) {
-				hasBeard = true;
-			}
-			if (Random.Range (0, 3) != 0) {
-				hasStache = true;
-			}
-			if (Random.Range (0, 9) == 0) {
-				hasShirt = false;
-			}
-		} else {
-			isMale = false;
-			maleRig.transform.parent.gameObject.SetActive(false);
-			femaleRig.transform.parent.gameObject.SetActive(true);
-			rig = femaleRig;
-			eyesAlbumName = "F Eyes";
-			jacketAlbumName = "F Jacket";
-			shirtAlbumName = "F Shirt";
-			hairAlbumName = "F Hair";
-			sashAlbumName = "F Sash";
-			maskAlbumName = "F Mask";
-			torsoEffectAlbumName = "Female Torso Effects";
-			if (Random.Range (0, 3) == 0) {
-				hasTattoo = true;
-			}
-			else{
-				hasTattoo = false;
-			}
-		}
-	
+		GameObject[] pantsAlbum = Resources.LoadAll<GameObject> ("Pants");
+		GameObject pantsObject = pantsAlbum [Random.Range (0, pantsAlbum.Length)];
 
-		//Picking Colors
 		Material[] clothesColorAlbum = Resources.LoadAll<Material> ("ClothesColor");
 		Material[] faceColorAlbum = Resources.LoadAll<Material> ("SkinColor");
 		Material[] hairColorAlbum = Resources.LoadAll<Material> ("Hair");
-		
+
 		Material hairColor = hairColorAlbum [Random.Range (0, hairColorAlbum.Length)];
 		Material skinColor = faceColorAlbum [Random.Range (0, faceColorAlbum.Length)];
 		Material shirtColor = clothesColorAlbum [Random.Range (0, clothesColorAlbum.Length)];
 		Material jacketColor = clothesColorAlbum [Random.Range (0, clothesColorAlbum.Length)];
+		Material pantsColor = clothesColorAlbum [Random.Range (0, clothesColorAlbum.Length)];
 		Material effectsColor = clothesColorAlbum [Random.Range (0, clothesColorAlbum.Length)];
-		Material pantsColor = effectsColor;
 		Material hatColor = jacketColor;
 		Material highlightColor = shirtColor;
 
-		//Setting SkinTone
-		rig.head.material = skinColor;
-		rig.rightHand.material = skinColor;
-		rig.leftHand.material = skinColor;
-		rig.torso.material = skinColor;
-		rig.leftShoulderSkin.material = skinColor;
-		rig.rightShoulderSkin.material = skinColor;
-		rig.leftForearmSkin.material = skinColor;
-		rig.rightForearmSkin.material = skinColor;
-		rig.ear.material = skinColor;
+		pantsObject.GetComponent<Pants> ().Equip (this, pantsColor);
 
-		
-		//Eyes
-		Sprite[] eyesAlbum = Resources.LoadAll<Sprite> (eyesAlbumName);
-		rig.eyes.sprite = eyesAlbum [Random.Range (0, eyesAlbum.Length)];
+        if (Random.Range(0, 7) != 0) //Shirt Check
+        {           
+            hasShirt = true;
+            GameObject[] shirtAlbum = Resources.LoadAll<GameObject>("Shirt");
+            GameObject shirtObject = shirtAlbum[Random.Range(0, shirtAlbum.Length)];
+            shirtObject.GetComponent<Shirt>().Equip(this, shirtColor);
+        }
+        else
+        {
+            hasShirt = false;
+            shirt.sprite = null;
+            leftShoulder.sprite = null;
+            rightShoulder.sprite = null;
+            leftForearm.sprite = null;
+            rightForearm.sprite = null;
+        }
 
-		//Pants
-		GameObject[] pantsAlbum = Resources.LoadAll<GameObject> ("Pants");
-		GameObject pantsObject = pantsAlbum [Random.Range (0, pantsAlbum.Length)];
-		pantsObject.GetComponent<Pants> ().Equip (rig, pantsColor, jacketColor);
-
-		//Shirt
-		if (hasShirt == true) {         
-			GameObject[] shirtAlbum = Resources.LoadAll<GameObject> (shirtAlbumName);
-			GameObject shirtObject = shirtAlbum [Random.Range (0, shirtAlbum.Length)];
-			shirtObject.GetComponent<Shirt> ().Equip (rig, shirtColor, effectsColor);
-		} else {
-			hasShirt = false;
-			rig.shirt.sprite = null;
-			rig.leftShoulder.sprite = null;
-			rig.rightShoulder.sprite = null;
-			rig.leftForearm.sprite = null;
-			rig.rightForearm.sprite = null;
-		}
-
-		//Hat
-		if (Random.Range (0, 3) != 0) {
+        if (Random.Range (0, 3) != 0) {			//Hat Check
 			hasHat = true;
 			GameObject[] hatAlbum = Resources.LoadAll<GameObject> ("Hat");
 			GameObject hatObject = hatAlbum [Random.Range (0, hatAlbum.Length)];
-			hatObject.GetComponent<Hat> ().Equip (rig, hatColor, highlightColor);
+			hatObject.GetComponent<Hat> ().Equip (this, hatColor, highlightColor);
+
 		} else {
 			hasHat = false;
-			rig.hatFront.sprite = null;
-			rig.hatBack.sprite = null;
+			hatFront.sprite = null;
+			hatBack.sprite = null;
 		}
-
-		//Hair
-		if (Random.Range (0, 3) != 0) {
-			rig.hairBack.sprite = null;
+		if (Random.Range (0, 3) != 0) {			//HairCheck
 			hasHair = true;
-			GameObject[] hairAlbum = Resources.LoadAll<GameObject> (hairAlbumName);
+			GameObject[] hairAlbum = Resources.LoadAll<GameObject> ("Hair");
 			GameObject hairObject = hairAlbum [Random.Range (0, hairAlbum.Length)];
-			hairObject.GetComponent<Hair> ().Equip (this, rig, hairColor, hasHat);
+			hairObject.GetComponent<Hair> ().Equip (this, hairColor, hasHat);
 		} else {
 			hasHair = false;
-			rig.hair.sprite = null;
-			rig.hairBack.sprite = null;
+			hairTop.sprite = null;
+			hairFront.sprite = null;
+			hairBack.sprite = null;
 		}
-		//Beard
-		if (hasBeard == true) {
+		if (Random.Range (0, 3) != 0) { 		//Beard Check
+			hasBeard = true;
 			Sprite[] beardAlbum = Resources.LoadAll<Sprite> ("Beard");
-			rig.beard.sprite = beardAlbum [Random.Range (0, beardAlbum.Length)];
-			rig.beard.material = hairColor;
+			beard.sprite = beardAlbum [Random.Range (0, beardAlbum.Length)];
+			beard.material = hairColor;
 		} else {
-			rig.beard.sprite = null;
+			hasBeard = false;
+			beard.sprite = null;
 		}
-		//Mustache
-		if (hasStache == true) { 
+		if (Random.Range (0, 3) != 0) { 		//Mustache Check
+			hasStache = true;
 			Sprite[] mustacheAlbum = Resources.LoadAll<Sprite> ("Mustache");
-			rig.mustache.sprite = mustacheAlbum [Random.Range (0, mustacheAlbum.Length)];
-			rig.mustache.material = hairColor;
+			mustache.sprite = mustacheAlbum [Random.Range (0, mustacheAlbum.Length)];
+			mustache.material = hairColor;
 		} else {
-			rig.mustache.sprite = null;
+			hasStache = false;
+			mustache.sprite = null;
 		}
-		//Head Effect
-		if (Random.Range (0, 3) == 0) { 
+		if (Random.Range (0, 3) == 0) { 		//Head Effect Check
 			hasHeadEffect = true;
 			Sprite[] headEffectAlbum = Resources.LoadAll<Sprite> ("HeadEffects");
-			rig.headEffect.sprite = headEffectAlbum [Random.Range (0, headEffectAlbum.Length)];
-			rig.headEffect.material = effectsColor;
+			headEffect.sprite = headEffectAlbum [Random.Range (0, headEffectAlbum.Length)];
+			headEffect.material = effectsColor;
 		} else {
 			hasHeadEffect = false;
-			rig.headEffect.sprite = null;
+			headEffect.sprite = null;
 		}
 
-		//Tattoo
-		if (hasTattoo == true) { 
-			Sprite[] tattooAlbum = Resources.LoadAll<Sprite> ("Tattoo");
-			rig.tattoo.sprite = tattooAlbum [Random.Range (0, tattooAlbum.Length)];
-		} else {
-			rig.tattoo.sprite = null;
-		}
-
-		
 		if (Random.Range (0, 3) == 0) { 		//Torso Effect Check
 			hasTorsoEffect = true;
-			Sprite[] torsoEffectAlbum = Resources.LoadAll<Sprite> (torsoEffectAlbumName);
-			rig.torsoEffect.sprite = torsoEffectAlbum [Random.Range (0, torsoEffectAlbum.Length)];
-			rig.torsoEffect.material = effectsColor;
+			Sprite[] torsoEffectAlbum = Resources.LoadAll<Sprite> ("TorsoEffects");
+			torsoEffect.sprite = torsoEffectAlbum [Random.Range (0, torsoEffectAlbum.Length)];
+			torsoEffect.material = effectsColor;
 		} else {
 			hasTorsoEffect = false;
-			rig.torsoEffect.sprite = null;
+			torsoEffect.sprite = null;
 		}
 
-		if (Random.Range (0, 6) != 0) {			//Mask Check
+		/*if (Random.Range (0, 3) != 0) {			//Neck Check
+			Sprite[] neckAlbum = Resources.LoadAll<Sprite> ("Neck");
+			neck.sprite = neckAlbum [Random.Range (0, neckAlbum.Length)];
+		} else {
+			neck.sprite = null;
+		}*/
+		/*if (Random.Range (0, 6) != 0) {			//Mask Check
 			hasMask = false;
-			rig.mask.sprite = null;
+			mask.sprite = null;
 		} else {
 			hasMask = true;
-			Sprite[] maskAlbum = Resources.LoadAll<Sprite> (maskAlbumName);
-			rig.mask.sprite = maskAlbum [Random.Range (0, maskAlbum.Length)];
-			rig.mask.material = effectsColor;
+			Sprite[] maskAlbum = Resources.LoadAll<Sprite> ("MaleMask");
+			mask.sprite = maskAlbum [Random.Range (0, maskAlbum.Length)];
+			mask.material = jacketColor;
 			hasBeard = false;
-			rig.beard.sprite = null;
+			beard.sprite = null;
 			hasStache = false;
-			rig.mustache.sprite = null;
-		}
-		//Jacket and Sash
-		rig.jacketFront.sprite = null;
-		if (Random.Range (0, 3) != 0) {
+			mustache.sprite = null;
+		}*/
+		if (Random.Range (0, 3) != 0) {			//Jacket Check
 			hasJacket = true;
-			GameObject[] coatAlbum = Resources.LoadAll<GameObject> (jacketAlbumName);
+			GameObject[] coatAlbum = Resources.LoadAll<GameObject> ("Jacket");
 			GameObject coatObject = coatAlbum [Random.Range (0, coatAlbum.Length)];
-			coatObject.GetComponent<Jacket> ().Equip (rig, jacketColor, highlightColor);
-			if (coatObject.GetComponent<Jacket> ().hasSash == true) {
-				Sprite [] sashAlbum = Resources.LoadAll<Sprite> (sashAlbumName);
-				rig.sash.sprite = sashAlbum [Random.Range (0, sashAlbum.Length)];
-				rig.sash.material = effectsColor;
-			} else
-				rig.sash.sprite = null;
+			coatObject.GetComponent<Jacket> ().Equip (this, jacketColor, highlightColor);
 		} else {
 			hasJacket = false;
 			hasJacket = false;
-			rig.jacketFront.sprite = null;
-			rig.jacketBack.sprite = null;
-			rig.jacket.sprite = null;
-			rig.sash.sprite = null;
+			jacketFront.sprite = null;
+			jacketBack.sprite = null;
+			jacket.sprite = null;
 		}
 
-	}
-	// Update is called once per frame
-	void Update () {
-		
+		head.material = skinColor;
+		rightHand.material = skinColor;
+		leftHand.material = skinColor;
+		torso.material = skinColor;
+		leftShoulderSkin.material = skinColor;
+		rightShoulderSkin.material = skinColor;
+		leftForearmSkin.material = skinColor;
+		rightForearmSkin.material = skinColor;
+		ear.material = skinColor;
+		//neck.material = jacketColor;
+		eyes.sprite = eye;
+
+
+			
+
 	}
 }

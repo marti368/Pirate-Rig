@@ -10,6 +10,10 @@ public class Jacket : MonoBehaviour {
 	public Sprite leftForearm;
 	public Sprite rightForearm;
 	public bool hasSleeves;
+	public bool hasSash;
+	public bool hasGlove;
+	public bool hasMantle;
+	public Recolor recolor;
 
 	// Use this for initialization
 	void Start () {
@@ -20,25 +24,36 @@ public class Jacket : MonoBehaviour {
 	void Update () {
 	
 	}
-	public void Equip(RigShuffler rig, Material jacketColor, Material highlightColor){
-		rig.jacket.sprite = torso;
-		rig.jacketFront.sprite = torsoFront;
+	public void Equip(RigManager rig, Material jacketColor, Material highlight){
+		if (torso != null) {
+			Sprite torsoRecolor = recolor.DoRecolor (torso, jacketColor.color, highlight.color);
+			rig.jacket.sprite = torsoRecolor;
+		} 
+		else {
+			rig.jacket.sprite = null;
+		}
 		rig.jacketBack.sprite = torsoBack;
 
-		rig.jacket.material = jacketColor;
-		rig.jacketFront.material = jacketColor;
 		rig.jacketBack.material = jacketColor;
 
 		if (hasSleeves == true) {
-			rig.leftShoulder.sprite = leftShoulder;
-			rig.rightShoulder.sprite = rightShoulder;
-			rig.leftForearm.sprite = leftForearm;
-			rig.rightForearm.sprite = rightForearm;
+			Sprite leftShoulderRecolor = recolor.DoRecolor (leftShoulder, jacketColor.color, highlight.color);
+			Sprite rightShoulderRecolor = recolor.DoRecolor (rightShoulder, jacketColor.color, highlight.color);
+			Sprite leftForearmRecolor = recolor.DoRecolor (leftForearm, jacketColor.color, highlight.color);
+			Sprite rightForearmRecolor = recolor.DoRecolor (rightForearm, jacketColor.color, highlight.color);
+			rig.leftShoulder.sprite = leftShoulderRecolor;
+			rig.rightShoulder.sprite = rightShoulderRecolor;
+			rig.leftForearm.sprite = leftForearmRecolor;
+			rig.rightForearm.sprite = rightForearmRecolor;
 
-			rig.leftShoulder.material = jacketColor;
-			rig.rightShoulder.material = jacketColor;
-			rig.leftForearm.material = jacketColor;
-			rig.rightForearm.material = jacketColor;
+		}
+		if (hasMantle == true) {
+			Sprite torsoFrontRecolor = recolor.DoRecolor (torsoFront, jacketColor.color, highlight.color);
+			rig.jacketFront.sprite = torsoFrontRecolor;
+		}
+		if (hasGlove == true) {
+			rig.leftHand.material = highlight;
+			rig.rightHand.material = highlight;
 		}
 	
 

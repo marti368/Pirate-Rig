@@ -7,6 +7,7 @@ public class Shirt : MonoBehaviour {
 	public Sprite rightShoulder;
 	public Sprite leftForearm;
 	public Sprite rightForearm;
+	public Recolor recolor;
 
 	// Use this for initialization
 	void Start () {
@@ -17,17 +18,17 @@ public class Shirt : MonoBehaviour {
 	void Update () {
 	
 	}
-	public void Equip(RigShuffler rig, Material shirtColor){
-		rig.shirt.sprite = torso;
-		rig.leftShoulder.sprite = leftShoulder;
-		rig.rightShoulder.sprite = rightShoulder;
-		rig.leftForearm.sprite = leftForearm;
-		rig.rightForearm.sprite = rightForearm;
+	public void Equip(RigManager rig, Material shirtColor, Material highlight){
+		Sprite torsoRecolor = recolor.DoRecolor (torso, shirtColor.color, highlight.color);
+		Sprite leftShoulderRecolor = recolor.DoRecolor (leftShoulder, shirtColor.color, highlight.color);
+		Sprite rightShoulderRecolor = recolor.DoRecolor (rightShoulder, shirtColor.color, highlight.color);
+		Sprite leftForearmRecolor = recolor.DoRecolor (leftForearm, shirtColor.color, highlight.color);
+		Sprite rightForearmRecolor = recolor.DoRecolor (rightForearm, shirtColor.color, highlight.color);
+		rig.shirt.sprite = torsoRecolor;
+		rig.leftShoulder.sprite = leftShoulderRecolor;
+		rig.rightShoulder.sprite = rightShoulderRecolor;
+		rig.leftForearm.sprite = leftForearmRecolor;
+		rig.rightForearm.sprite = rightForearmRecolor;
 
-		rig.shirt.material = shirtColor;
-		rig.leftShoulder.material = shirtColor;
-		rig.rightShoulder.material = shirtColor;
-		rig.leftForearm.material = shirtColor;
-		rig.rightForearm.material = shirtColor;
 	}
 }
